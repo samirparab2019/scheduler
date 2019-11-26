@@ -4,7 +4,15 @@ import Show from "./Show";
 import Header from "./Header";
 import Empty from "./Empty";
 
-export default function Appointment(props) {
-  return (props.interview ? <Show /> : <Empty />);
-}
+const Appointment = ({ time, interview }) => {
+  return (
+    <article className='appointment'>
+      <Header time={time} />
+      {interview ? <Show {...interview} /> : <Empty />}
+    </article>
+  );
+};
+export default Appointment;
+
+
 
