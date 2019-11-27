@@ -14,7 +14,7 @@ export function getAppointmentsForDay(state, day) {
   return result;
 }
 
-const getInterview = (state, interview) => {
+export function getInterview (state, interview) {
   if (interview) {
     let result = { student: interview.student };
     // console.log("heremmmmmmmmmmmmmmmmmmmmmmmm", state.interviewers)
@@ -30,4 +30,3 @@ const getInterview = (state, interview) => {
   return null;
 };
 
-module.exports.getInterview = getInterview;
