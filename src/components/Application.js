@@ -3,7 +3,7 @@ import DayList from "./DayList";
 import React, { useState, useEffect } from "react";
 import Appointment from "components/Appointment";
 import axios from 'axios';
-import {getAppointmentsForDay, getInterview, getInterviewersForDay} from "../helpers/selectors"
+import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "../helpers/selectors"
 import "components/Application.scss";
 
 
@@ -31,49 +31,49 @@ export default function Application(props) {
       ...state.appointments,
       [id]: appointment
     };
-    
     return axios.put(`http://localhost:8001/api/appointments/${id}`, { interview })
     .then(() => {
-      setState({...state, appointments});
-    }); 
+      setState({ ...state, appointments });
+    });
   }
 
- 
-
-  
-  useEffect( () => {
+  function cancelInterview(id) {
+    return axios.delete(`http://localhost:8001/api/appointments/${id}`)
+    .then(() => {
+      setState(state => ({...state, id, interview: null }));
+    })
+  }
+  useEffect(() => {
     Promise.all([
       Promise.resolve(
-          axios.get('http://localhost:8001/api/days')
-        
-          .then(res => {
-            //console.log(res.data);
-            return res.data;
-          })
-          
+        axios.get('http://localhost:8001/api/days')
+        .then(res => {
+          //console.log(res.data);
+           return res.data;
+        })
+
       ),
       Promise.resolve(
-        axios.get('http://localhost:8001/api/appointments') 
-      
+        axios.get('http://localhost:8001/api/appointments')
         .then(res => {
           //console.log(res.data);
           return res.data;
         })
-        
-    ),
-    Promise.resolve(
-      axios.get('http://localhost:8001/api/interviewers') 
-    
-      .then(res => {
-        //console.log(res.data);
-        return res.data;
-      })
-      
-  ),
+
+      ),
+      Promise.resolve(
+        axios.get('http://localhost:8001/api/interviewers')
+
+          .then(res => {
+            //console.log(res.data);
+            return res.data;
+          })
+
+      ),
     ]).then((all) => {
       //console.log("here=======>",all)
-        setState(prev => ({ ...prev, days: all[0], appointments: all[1], interviewers: all[2] }));
-      });
+      setState(prev => ({ ...prev, days: all[0], appointments: all[1], interviewers: all[2] }));
+    });
     // eslint-disable-next-line
   }, []);
 
@@ -82,12 +82,8 @@ export default function Application(props) {
 
   const interviewers = getInterviewersForDay(state, state.day);
   
-  
   const schedule = appointments.map((appointment) => {
     const interview = getInterview(state, appointment.interview);
-
-  
-
     return (
       <Appointment
         key={appointment.id}
@@ -95,33 +91,34 @@ export default function Application(props) {
         time={appointment.time}
         interview={interview}
         interviewers={interviewers}
-        bookInterview = {bookInterview}
+        bookInterview={bookInterview}
         cancelInterview={cancelInterview}
+
       />
     );
   });
 
   return (
     <React.Fragment>
-      <main className="layout">   
+      <main className="layout">
         <section className="sidebar">
           {/* Replace this with the sidebar elements during the "Environment Setup" activity. */}
           <img
-          className="sidebar--centered"
-          src="images/logo.png"
-          alt="Interview Scheduler"
-        />
-        <hr className="sidebar__separator sidebar--centered" />
-        <nav className="sidebar__menu">
-        <DayList
-          days={state.days} day={state.day} setDay={setDay}
-        />
-        </nav>
-        <img
-          className="sidebar__lhl sidebar--centered"
-          src="images/lhl.png"
-          alt="Lighthouse Labs"
-        />
+            className="sidebar--centered"
+            src="images/logo.png"
+            alt="Interview Scheduler"
+          />
+          <hr className="sidebar__separator sidebar--centered" />
+          <nav className="sidebar__menu">
+            <DayList
+              days={state.days} day={state.day} setDay={setDay}
+            />
+          </nav>
+          <img
+            className="sidebar__lhl sidebar--centered"
+            src="images/lhl.png"
+            alt="Lighthouse Labs"
+          />
         </section>
         <section className="schedule">
           {schedule}
