@@ -8,9 +8,10 @@ import Confirm from "./Confirm";
 import Status from "./Status";
 import Error from "./Error";
 import useVisualMode from "hooks/useVisualMode";
+import Application  from "../Application";
 
 
-const Appointment = ({ time, interview }) => {
+const Appointment = ({ props, time, interview }) => {
   const EMPTY = "EMPTY";
   const SHOW = "SHOW";
   const CREATE = "CREATE";
@@ -20,13 +21,21 @@ const Appointment = ({ time, interview }) => {
     interview ? SHOW : EMPTY
   );
 
-  
-
   const onAdd = () => transition(CREATE);
-  const onSave = () => transition(SHOW);
+  // const onSave = () => transition(SHOW);
   const onCancel = () =>  back();
 
-  
+  function save(name, interviewer) {
+    const interview = {
+      student: name,
+      interviewer
+    };
+    transition(SAVING);
+    props.bookInterview(props.id, interview)
+    .then(() => {
+      transition(SHOW);
+    });
+  }
   return (
     <article className='appointment'>
       <Header time={time} />
@@ -39,11 +48,15 @@ const Appointment = ({ time, interview }) => {
           />
       )}
       {mode === CREATE && (
-        <Form interviewers={[]} onSave={onSave} onCancel={onCancel} />
+        <Form 
+        interviewers={[]} 
+        onCancel={onCancel} 
+        onSave={save}
+        />
       )}
       {mode === SAVING && <Status message="Saving" />}
-
       
+
 
 
 
@@ -54,6 +67,3 @@ const Appointment = ({ time, interview }) => {
   );
 };
 export default Appointment;
-
-
-
