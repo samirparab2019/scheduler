@@ -9,7 +9,7 @@ export default function Button(props) {
      "button--confirm": props.confirm,
      "button--danger": props.danger
    });
-   vagrant p
+   
   return (
      <button
        className={buttonClass}

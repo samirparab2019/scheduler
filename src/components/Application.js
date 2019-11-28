@@ -3,7 +3,7 @@ import DayList from "./DayList";
 import React, { useState, useEffect } from "react";
 import Appointment from "components/Appointment";
 import axios from 'axios';
-import {getAppointmentsForDay, getInterview} from "../helpers/selectors"
+import {getAppointmentsForDay, getInterview, getInterviewersForDay} from "../helpers/selectors"
 
 import "components/Application.scss";
 
@@ -28,7 +28,7 @@ export default function Application(props) {
           axios.get('http://localhost:8001/api/days')
         
           .then(res => {
-            console.log(res.data);
+            //console.log(res.data);
             return res.data;
           })
           
@@ -37,7 +37,7 @@ export default function Application(props) {
         axios.get('http://localhost:8001/api/appointments') 
       
         .then(res => {
-          console.log(res.data);
+          //console.log(res.data);
           return res.data;
         })
         
@@ -52,12 +52,17 @@ export default function Application(props) {
       
   ),
     ]).then((all) => {
-        setState(prev => ({ days: all[0], appointments: all[1], interviewers: all[2] }));
+      //console.log("here=======>",all)
+        setState(prev => ({ ...prev, days: all[0], appointments: all[1], interviewers: all[2] }));
       });
     // eslint-disable-next-line
   }, []);
 
   const appointments = getAppointmentsForDay(state, state.day);
+  //console.log("hehehehehehehhehehhe", appointments)
+
+  const interviewers = getInterviewersForDay(state, state.day);
+  
 
   const schedule = appointments.map((appointment) => {
     const interview = getInterview(state, appointment.interview);
@@ -71,6 +76,7 @@ export default function Application(props) {
       />
     );
   });
+  console.log(schedule)
 
 
   return (
