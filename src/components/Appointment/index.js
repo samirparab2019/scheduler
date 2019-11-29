@@ -19,6 +19,8 @@ const Appointment = ({ props, id, time, interview, interviewers, bookInterview, 
   const CONFIRM = "CONFIRM";
   const DELETING = "DELETING";
   const EDIT = "EDIT";
+  const ERROR_SAVE = "ERROR_SAVE";
+  const ERROR_DELETE = "ERROR_DELETE";
 
   const { mode, transition, back } = useVisualMode(
     interview ? SHOW : EMPTY
@@ -38,16 +40,14 @@ const Appointment = ({ props, id, time, interview, interviewers, bookInterview, 
     };
     transition(SAVING);
     bookInterview(id, interview)
-    .then(res => 
-      transition(SHOW)
-    );
+    .then(res => transition(SHOW))
+    .catch(error => transition(ERROR_SAVE, true));
   }
   const onConfirm = () => {
     transition(DELETING, true);
     cancelInterview(id)
-      .then(res => 
-        transition(EMPTY)
-      )
+      .then(res => transition(EMPTY))
+      .catch(error => transition(ERROR_DELETE, true));
       
   };
   return (
@@ -89,6 +89,12 @@ const Appointment = ({ props, id, time, interview, interviewers, bookInterview, 
           onCancel={onCancel}
           onDelete={onDelete}
         />
+      )}
+      {mode === ERROR_DELETE && (
+        <Error message="Cannot not cancel appointment" onClose={onCancel} />
+      )}
+      {mode === ERROR_SAVE && (
+        <Error message="Cannot not book appointment" onClose={onCancel} />
       )}
 
 
