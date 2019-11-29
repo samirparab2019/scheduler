@@ -38,7 +38,7 @@ const Appointment = ({ props, id, time, interview, interviewers, bookInterview, 
       student: name,
       interviewer
     };
-    transition(SAVING);
+    transition(SAVING, true);
     bookInterview(id, interview)
     .then(res => transition(SHOW))
     .catch(error => transition(ERROR_SAVE, true));
