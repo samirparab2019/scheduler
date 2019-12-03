@@ -51,7 +51,7 @@ const Appointment = ({ props, id, time, interview, interviewers, bookInterview, 
       
   };
   return (
-    <article className='appointment'>
+    <article className='appointment' data-testid="appointment">
       <Header time={time} />
 
       {mode === EMPTY && <Empty onAdd={onAdd} />}
@@ -91,10 +91,10 @@ const Appointment = ({ props, id, time, interview, interviewers, bookInterview, 
         />
       )}
       {mode === ERROR_DELETE && (
-        <Error message="Cannot not cancel appointment" onClose={onCancel} />
+        <Error message="Cannot not cancel appointment." onClose={onCancel} />
       )}
       {mode === ERROR_SAVE && (
-        <Error message="Cannot not book appointment" onClose={onCancel} />
+        <Error message="Cannot not book appointment." onClose={onCancel} />
       )}
 
 

@@ -76,24 +76,24 @@ export default function useApplicationData() {
 
   useEffect(() => {
     Promise.all([
-      Promise.resolve(
+      
         axios.get('http://localhost:8001/api/days')
           .then(res => {
             return res.data;
-          })
-      ),
-      Promise.resolve(
+          }),
+      
+      
         axios.get('http://localhost:8001/api/appointments')
           .then(res => {
             return res.data;
-          })
-      ),
-      Promise.resolve(
+          }),
+      
+      
         axios.get('http://localhost:8001/api/interviewers')
           .then(res => {
             return res.data;
-          })
-      ),
+          }),
+      
     ]).then((all) => {
       dispatch({ type: SET_APPLICATION_DATA, days: all[0], appointments: all[1], interviewers: all[2] });
     });
