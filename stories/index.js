@@ -1,10 +1,7 @@
 import React, { Fragment } from 'react';
-
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
-
 import "index.scss";
-
 import Button from "components/Button";
 import DayListItem from "components/DayListItem";
 import DayList from "components/DayList";
@@ -18,7 +15,6 @@ import Confirm from "components/Appointment/Confirm";
 import Status from "components/Appointment/Status";
 import Error from "components/Appointment/Error";
 import Form from "components/Appointment/Form";
-
 
 storiesOf("Button", module)
   .addParameters({
@@ -78,7 +74,6 @@ storiesOf("DayList", module)
     <DayList days={days} day={"Tuesday"} setDay={action("setDay")} />
   )
 );
-
 
 const interviewer = {
   id: 1,
@@ -211,5 +206,3 @@ storiesOf("Appointment", module)
     <Appointment id="last" time="1pm" />
   </Fragment>
 ))
-
-

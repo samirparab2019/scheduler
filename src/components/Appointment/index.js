@@ -10,8 +10,7 @@ import Error from "./Error";
 import useVisualMode from "hooks/useVisualMode";
 import Application  from "../Application";
 
-
-const Appointment = ({ props, id, time, interview, interviewers, bookInterview, cancelInterview }) => {
+const Appointment = ({ props, id, time, interview, interviewers, bookInterview, cancelInterview, editInterview }) => {
   const EMPTY = "EMPTY";
   const SHOW = "SHOW";
   const CREATE = "CREATE";
@@ -29,8 +28,6 @@ const Appointment = ({ props, id, time, interview, interviewers, bookInterview, 
   const onAdd = () => transition(CREATE);
   const onEdit = () => transition(EDIT);
   const onDelete = () => transition(CONFIRM);
-  
-  
   const onCancel = () =>  back();
 
   function save(name, interviewer) {
@@ -40,6 +37,16 @@ const Appointment = ({ props, id, time, interview, interviewers, bookInterview, 
     };
     transition(SAVING, true);
     bookInterview(id, interview)
+    .then(res => transition(SHOW))
+    .catch(error => transition(ERROR_SAVE, true));
+  }
+  function edit(name, interviewer) {
+    const interview = {
+      student: name,
+      interviewer
+    };
+    transition(SAVING, true);
+    editInterview(id, interview)
     .then(res => transition(SHOW))
     .catch(error => transition(ERROR_SAVE, true));
   }
@@ -85,7 +92,7 @@ const Appointment = ({ props, id, time, interview, interviewers, bookInterview, 
           student={interview.student}
           interviewer={interview.interviewer}
           interviewers={interviewers}
-          onSave={save}
+          onSave={edit}
           onCancel={onCancel}
           onDelete={onDelete}
         />
@@ -96,8 +103,6 @@ const Appointment = ({ props, id, time, interview, interviewers, bookInterview, 
       {mode === ERROR_SAVE && (
         <Error message="Cannot not book appointment." onClose={onCancel} />
       )}
-
-
     </article>
   );
 };

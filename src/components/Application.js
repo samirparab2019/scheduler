@@ -10,7 +10,8 @@ export default function Application(props) {
     state,
     setDay,
     bookInterview,
-    cancelInterview
+    cancelInterview,
+    editInterview
   } = useApplicationData();
 
   const appointments = getAppointmentsForDay(state, state.day);
@@ -27,6 +28,7 @@ export default function Application(props) {
         interviewers={interviewers}
         bookInterview={bookInterview}
         cancelInterview={cancelInterview}
+        editInterview={editInterview}
       />
     );
   });
@@ -58,6 +60,7 @@ export default function Application(props) {
           {/* {appointments.map((appointment) => 
           <Appointment key={appointment.id} {...appointment} />)}
           <Appointment key="last" time="5pm" /> */}
+          <Appointment key="last" time="5pm" />
         </section>
       </main>
     </React.Fragment>

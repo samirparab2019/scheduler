@@ -12,9 +12,9 @@ import { render } from "@testing-library/react";
 /*
   We import the component that we are testing
 */
-import Application from "components/Application";
 
 import Appointment from "../Appointment/index"
+import Application from "components/Application";
 
 /*
   A test that renders a React Component
@@ -23,6 +23,7 @@ import Appointment from "../Appointment/index"
 it("renders without crashing", () => {
   render(<Application />);
 });
+
 
 describe("Appointment", () => {
   it("renders without crashing", () => {

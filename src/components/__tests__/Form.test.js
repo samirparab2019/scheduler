@@ -10,16 +10,10 @@ import React from "react";
 
 import { getByText, fireEvent, render, cleanup } from "@testing-library/react";
 
-
 /*
   We import the component that we are testing
 */
 import Application from "components/Application";
-
-import Appointment from "../Appointment/index"
-
-
-
 import Form from "components/Appointment/Form";
 
 afterEach(cleanup);

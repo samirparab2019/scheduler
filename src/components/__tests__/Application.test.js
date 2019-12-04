@@ -1,24 +1,17 @@
 import React from "react";
-
 import { render, cleanup, fireEvent, queryByText, waitForElement, getByAltText, getByPlaceholderText, getAllByTestId, getByText, queryByAltText } from "@testing-library/react";
-
 import Application from "../Application";
-
 afterEach(cleanup);
-
 import axios from 'axios';
 
 describe("Application", () => {
-  
   it("defaults to Monday and changes the schedule when a new day is selected", () => {
     const { getByText } = render(<Application />);
-  
     return waitForElement(() => getByText("Monday"));
   });
 
   it("loads data, books an interview and reduces the spots remaining for Monday by 1", async () => {
     const { container } = render(<Application />);
-    // const { getByText } = render(<Component />)
   
     await waitForElement(() => getByText(container, "Archie Cohen"));
   
@@ -187,4 +180,3 @@ describe("Application", () => {
     );
   });
 });
-

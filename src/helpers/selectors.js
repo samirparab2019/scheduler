@@ -32,7 +32,6 @@ export function getInterviewersForDay(state, day) {
   if (filteredDays.length === 0) {
     return [];
   }
-
   for(let key in filteredDays[0].interviewers) {
     let newKey = filteredDays[0].interviewers[key];
     
@@ -40,9 +39,5 @@ export function getInterviewersForDay(state, day) {
 
   };
   const data = result.filter(el => el !== null);
- 
   return data;
 }
-
-
-
