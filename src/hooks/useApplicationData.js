@@ -38,11 +38,18 @@ export default function useApplicationData() {
 
   function editInterview(id, interview, edit = true) {
     const selectedDay = state.days[Math.floor(id / 5)];
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+    const appointments = { ...state.appointments, [id]: appointment };
+
     return axios.put(`http://localhost:8001/api/appointments/${id}`, { interview })
       .then(() => {
         if (edit === true) {
           dispatch({ type: SPOTS_REMAINING, id: id, spots: selectedDay.spots });
         }
+        dispatch({ type: SET_INTERVIEW, appointments });
       });
   }
 

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import "../Appointment/styles.scss";
 import Show from "./Show";
 import Header from "./Header";
@@ -24,6 +24,7 @@ const Appointment = ({ props, id, time, interview, interviewers, bookInterview, 
   const { mode, transition, back } = useVisualMode(
     interview ? SHOW : EMPTY
   );
+
 
   const onAdd = () => transition(CREATE);
   const onEdit = () => transition(EDIT);
@@ -89,10 +90,11 @@ const Appointment = ({ props, id, time, interview, interviewers, bookInterview, 
       )}
       {mode === EDIT && (
         <Form
+          name={interview.student}
           student={interview.student}
           interviewer={interview.interviewer}
           interviewers={interviewers}
-          onSave={edit}
+          onSave={edit}      
           onCancel={onCancel}
           onDelete={onDelete}
         />
