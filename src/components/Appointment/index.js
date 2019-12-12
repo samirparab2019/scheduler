@@ -25,7 +25,6 @@ const Appointment = ({ props, id, time, interview, interviewers, bookInterview, 
     interview ? SHOW : EMPTY
   );
 
-
   const onAdd = () => transition(CREATE);
   const onEdit = () => transition(EDIT);
   const onDelete = () => transition(CONFIRM);
@@ -46,7 +45,7 @@ const Appointment = ({ props, id, time, interview, interviewers, bookInterview, 
       student: name,
       interviewer
     };
-    transition(SAVING, true);
+    transition(SAVING);
     editInterview(id, interview)
     .then(res => transition(SHOW))
     .catch(error => transition(ERROR_SAVE, true));
@@ -54,14 +53,13 @@ const Appointment = ({ props, id, time, interview, interviewers, bookInterview, 
   const onConfirm = () => {
     transition(DELETING, true);
     cancelInterview(id)
-      .then(res => transition(EMPTY))
-      .catch(error => transition(ERROR_DELETE, true));
+    .then(res => transition(EMPTY))
+    .catch(error => transition(ERROR_DELETE, true));
       
   };
   return (
     <article className='appointment' data-testid="appointment">
       <Header time={time} />
-
       {mode === EMPTY && <Empty onAdd={onAdd} />}
       {mode === DELETING && <Status message="Deleting" />}
       {mode === SHOW && interview && (
@@ -70,7 +68,7 @@ const Appointment = ({ props, id, time, interview, interviewers, bookInterview, 
           interviewer={interview.interviewer}
           onDelete={onDelete}
           onEdit={onEdit}
-          />
+        />
       )}
       {mode === CREATE && (
         <Form 
@@ -92,7 +90,7 @@ const Appointment = ({ props, id, time, interview, interviewers, bookInterview, 
         <Form
           name={interview.student}
           student={interview.student}
-          interviewer={interview.interviewer}
+          interviewer={interview['interviewer']["id"]}
           interviewers={interviewers}
           onSave={edit}      
           onCancel={onCancel}

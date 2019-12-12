@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect, useReducer } from "react";
+import { useEffect, useReducer } from "react";
 import axios from 'axios';
 import "components/Application.scss";
 import reducer, {
@@ -19,7 +19,7 @@ export default function useApplicationData() {
 
   const setDay = day => dispatch({ type: SET_DAY, day });
 
-  function bookInterview(id, interview, edit = false) {
+  function bookInterview(id, interview) {
     const selectedDay = state.days[Math.floor(id / 5)];
     const appointment = {
       ...state.appointments[id],
@@ -29,14 +29,14 @@ export default function useApplicationData() {
 
     return axios.put(`http://localhost:8001/api/appointments/${id}`, { interview })
       .then(() => {
-        if (edit === false) {
+        
           dispatch({ type: SPOTS_REMAINING, id: id, spots: selectedDay.spots - 1 });
-        }
+        
         dispatch({ type: SET_INTERVIEW, appointments });
       });
   }
 
-  function editInterview(id, interview, edit = true) {
+  function editInterview(id, interview) {
     const selectedDay = state.days[Math.floor(id / 5)];
     const appointment = {
       ...state.appointments[id],
@@ -46,12 +46,14 @@ export default function useApplicationData() {
 
     return axios.put(`http://localhost:8001/api/appointments/${id}`, { interview })
       .then(() => {
-        if (edit === true) {
+        
           dispatch({ type: SPOTS_REMAINING, id: id, spots: selectedDay.spots });
-        }
+        
         dispatch({ type: SET_INTERVIEW, appointments });
       });
   }
+
+  
 
   function cancelInterview(id, interview) {
     const selectedDay = state.days[Math.floor(id / 5)];

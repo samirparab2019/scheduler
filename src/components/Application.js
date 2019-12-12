@@ -1,5 +1,5 @@
 import DayList from "./DayList";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Appointment from "components/Appointment";
 import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "../helpers/selectors"
 import "components/Application.scss";
@@ -24,6 +24,7 @@ export default function Application(props) {
         key={appointment.id}
         id={appointment.id}
         time={appointment.time}
+        {...appointment}
         interview={interview}
         interviewers={interviewers}
         bookInterview={bookInterview}
@@ -37,7 +38,6 @@ export default function Application(props) {
     <React.Fragment>
       <main className="layout">
         <section className="sidebar">
-          {/* Replace this with the sidebar elements during the "Environment Setup" activity. */}
           <img
             className="sidebar--centered"
             src="images/logo.png"
@@ -57,9 +57,6 @@ export default function Application(props) {
         </section>
         <section className="schedule">
           {schedule}
-          {/* {appointments.map((appointment) => 
-          <Appointment key={appointment.id} {...appointment} />)}
-          <Appointment key="last" time="5pm" /> */}
           <Appointment key="last" time="5pm" />
         </section>
       </main>
