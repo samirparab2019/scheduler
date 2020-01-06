@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "../Appointment/styles.scss";
 import Show from "./Show";
 import Header from "./Header";
@@ -8,7 +8,6 @@ import Confirm from "./Confirm";
 import Status from "./Status";
 import Error from "./Error";
 import useVisualMode from "hooks/useVisualMode";
-import Application  from "../Application";
 
 const Appointment = ({ props, id, time, interview, interviewers, bookInterview, cancelInterview, editInterview }) => {
   const EMPTY = "EMPTY";

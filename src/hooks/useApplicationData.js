@@ -27,7 +27,7 @@ export default function useApplicationData() {
     };
     const appointments = { ...state.appointments, [id]: appointment };
 
-    return axios.put(`http://localhost:8001/api/appointments/${id}`, { interview })
+    return axios.put(`/api/appointments/${id}`, { interview })
       .then(() => {
         
           dispatch({ type: SPOTS_REMAINING, id: id, spots: selectedDay.spots - 1 });
@@ -44,7 +44,7 @@ export default function useApplicationData() {
     };
     const appointments = { ...state.appointments, [id]: appointment };
 
-    return axios.put(`http://localhost:8001/api/appointments/${id}`, { interview })
+    return axios.put(`/api/appointments/${id}`, { interview })
       .then(() => {
         
           dispatch({ type: SPOTS_REMAINING, id: id, spots: selectedDay.spots });
@@ -62,7 +62,7 @@ export default function useApplicationData() {
       interview: { ...interview }
     };
     const appointments = { ...state.appointments, [id]: appointment };
-    return axios.delete(`http://localhost:8001/api/appointments/${id}`)
+    return axios.delete(`/api/appointments/${id}`)
       .then(() => {
         dispatch({ type: SPOTS_REMAINING, id: id, spots: selectedDay.spots + 1 });
         dispatch({ type: SET_INTERVIEW, appointments: appointments });
@@ -72,17 +72,17 @@ export default function useApplicationData() {
   useEffect(() => {
     Promise.all([
 
-      axios.get('http://localhost:8001/api/days')
+      axios.get('/api/days')
         .then(res => {
           return res.data;
         }),
 
-      axios.get('http://localhost:8001/api/appointments')
+      axios.get('/api/appointments')
         .then(res => {
           return res.data;
         }),
 
-      axios.get('http://localhost:8001/api/interviewers')
+      axios.get('/api/interviewers')
         .then(res => {
           return res.data;
         }),
